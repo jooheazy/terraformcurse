@@ -20,12 +20,11 @@ resource "google_compute_instance" "default" {
   lifecycle {
     ignore_changes = [attached_disk]
   }
-
 }
 
 resource "google_compute_network" "vpc_network" {
   name = "batatinhas-vpc"
-  auto_create_subnetworks = false
+  auto_create_subnetworks = true
 }
 
 resource "google_compute_subnetwork" "network-with-private-secondary-ip-ranges" {
@@ -62,10 +61,6 @@ resource "google_compute_instance" "web" {
 resource "google_compute_attached_disk" "default" {
   disk     = google_compute_disk.default.id
   instance = google_compute_instance.default.id
-
-  depends_on = [
-    google_compute_instance.default, google_compute_disk.default,
-  ]
 
 }
 
